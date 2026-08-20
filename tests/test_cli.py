@@ -24,7 +24,9 @@ def test_cli_generate_manifests(tmp_path):
     result = runner.invoke(app, ["generate-manifests", "--output", out_dir])
 
     assert result.exit_code == 0
-    assert "01_metallb_l2_pool.yaml" in result.stdout
+    assert "Successfully generated" in result.stdout
+    assert os.path.exists(os.path.join(out_dir, "01_metallb_l2_pool.yaml"))
+    assert os.path.exists(os.path.join(out_dir, "02_nginx_ingress_lb.yaml"))
     assert os.path.exists(out_dir)
 
 
