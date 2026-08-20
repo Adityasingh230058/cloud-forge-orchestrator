@@ -11,7 +11,7 @@
 We take the security of **Cloud Forge Orchestrator** seriously. If you believe you have found a security vulnerability in this project, please report it responsibly:
 
 1. **Do not open a public GitHub issue.**
-2. Send a detailed description of the vulnerability directly to `aditya.singh58@nmims.in`.
+2. Send a detailed description of the vulnerability directly to `adityasingh120444@gmail.com`.
 3. Include steps to reproduce, affected components, and potential impact.
 
 We will acknowledge receipt within 48 hours and work on a coordinated fix.
