@@ -3,7 +3,7 @@
 # ⚙️ Cloud Forge Orchestrator
 ### Automated Multi-Server Private Cloud & Kubernetes Cluster Orchestrator with MetalLB & Security Hardening
 
-[![CI Build](https://img.shields.io/badge/CI-GitHub%20Actions-blue.svg)](.github/workflows/ci.yml)
+[![CI](https://github.com/Adityasingh230058/cloud-forge-orchestrator/actions/workflows/ci.yml/badge.svg)](https://github.com/Adityasingh230058/cloud-forge-orchestrator/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/Python-3.9%20|%203.10%20|%203.11%20|%203.12-brightgreen.svg)](https://www.python.org/)
 [![Kubernetes Version](https://img.shields.io/badge/Kubernetes-v1.28%2B-326ce5.svg)](https://kubernetes.io/)
 [![Load Balancer](https://img.shields.io/badge/Load%20Balancer-MetalLB%20L2-orange.svg)](https://metallb.universe.tf/)
