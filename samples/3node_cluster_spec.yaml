@@ -1,0 +1,63 @@
+# ==============================================================================
+# Cloud Forge Orchestrator: 3-Server Enterprise Topology Specification
+# Multi-Node Kubernetes (1 Control-Plane + 2 Worker Nodes) with MetalLB & Security
+# ==============================================================================
+cluster_name: "enterprise-edge-k8s"
+version: "v1.28.0"
+
+networking:
+  pod_cidr: "10.244.0.0/16"
+  service_cidr: "10.96.0.0/12"
+  cni_plugin: "flannel"
+  load_balancer_ip_range: "192.168.1.200-192.168.1.220"
+  ingress_controller: "ingress-nginx"
+  cluster_dns_ip: "10.96.0.10"
+
+security:
+  enforce_default_deny_network_policies: true
+  enable_host_firewall: true
+  restrict_kubelet_readonly_port: true
+  enforce_rbac_least_privilege: true
+  enable_mtls: true
+
+nodes:
+  # Server 1: Control-Plane / Master Node
+  - id: "srv-master-01"
+    role: "control-plane"
+    ip: "192.168.1.101"
+    user: "root"
+    ssh_port: 22
+    cpu_cores: 4
+    memory_gb: 8
+    disk_gb: 120
+    labels:
+      node.kubernetes.io/role: "control-plane"
+      topology.kubernetes.io/zone: "rack-01"
+
+  # Server 2: Worker Node 01 (Application Workloads & Ingress)
+  - id: "srv-worker-01"
+    role: "worker"
+    ip: "192.168.1.102"
+    user: "root"
+    ssh_port: 22
+    cpu_cores: 8
+    memory_gb: 16
+    disk_gb: 250
+    labels:
+      node.kubernetes.io/role: "worker"
+      tier: "app-workloads"
+      topology.kubernetes.io/zone: "rack-01"
+
+  # Server 3: Worker Node 02 (Data Services & Stateful Workloads)
+  - id: "srv-worker-02"
+    role: "worker"
+    ip: "192.168.1.103"
+    user: "root"
+    ssh_port: 22
+    cpu_cores: 8
+    memory_gb: 16
+    disk_gb: 250
+    labels:
+      node.kubernetes.io/role: "worker"
+      tier: "data-workloads"
+      topology.kubernetes.io/zone: "rack-02"
