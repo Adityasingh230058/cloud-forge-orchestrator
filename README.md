@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚙️ Cloud Forge Orchestrator
+# Cloud Forge Orchestrator
 ### Automated Multi-Server Private Cloud & Kubernetes Cluster Orchestrator with MetalLB & Security Hardening
 
 [![CI](https://github.com/Adityasingh230058/cloud-forge-orchestrator/actions/workflows/ci.yml/badge.svg)](https://github.com/Adityasingh230058/cloud-forge-orchestrator/actions/workflows/ci.yml)
@@ -10,13 +10,13 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Code Style](https://img.shields.io/badge/Code%20Style-Black-000000.svg)](https://github.com/psf/black)
 
-**`cloud-forge-orchestrator`** is an automated, production-grade private cloud orchestration engine. It transforms raw, multi-server infrastructure (such as 3 bare-metal rack servers or virtual machines) into a fully orchestrated, hardened, multi-node Kubernetes cloud platform equipped with native **Layer 2 Bare-Metal Load Balancing (MetalLB)**, **NGINX Ingress Routing**, and **Zero-Trust NetworkPolicies**.
+**`cloud-forge-orchestrator`** is an automated private cloud orchestration engine. It transforms multi-server infrastructure (such as 3 bare-metal rack servers or virtual machines) into a fully orchestrated, hardened, multi-node Kubernetes cloud platform equipped with native **Layer 2 Bare-Metal Load Balancing (MetalLB)**, **NGINX Ingress Routing**, and **Zero-Trust NetworkPolicies**.
 
 </div>
 
 ---
 
-## 🌟 The Challenge & Solution
+## Architectural Motivation
 
 In enterprise on-premise data centers, edge computing, and private cloud deployments, setting up a production-ready Kubernetes cluster from scratch across physical servers often lacks a standardized, automated pathway. Administrators struggle to cleanly bridge:
 1. **OS & Virtualization Prerequisites** (VT-x, swap memory deactivation, bridge netfilters).
@@ -29,7 +29,7 @@ In enterprise on-premise data centers, edge computing, and private cloud deploym
 
 ---
 
-## 🏛️ 5-Layer Architectural Blueprint
+## 5-Layer Architectural Blueprint
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -58,9 +58,9 @@ In enterprise on-premise data centers, edge computing, and private cloud deploym
 
 ---
 
-## 📋 3-Server Topology Specification
+## 3-Server Topology Specification
 
-A typical enterprise deployment maps across 3 servers (1 Master + 2 Workers):
+A typical deployment maps across 3 servers (1 Master + 2 Workers):
 
 ```yaml
 # samples/3node_cluster_spec.yaml
@@ -101,7 +101,7 @@ nodes:
 
 ---
 
-## ⚡ Quickstart
+## Quickstart
 
 ### 1. Installation
 
@@ -116,10 +116,10 @@ pip install -e .
 
 ---
 
-## 💻 CLI Usage & Commands
+## CLI Usage & Commands
 
 ### 1. Run Multi-Server Simulation (Zero Hardware Needed)
-Simulate the full 5-stage orchestration pipeline locally with rich terminal dashboards and manifest exports:
+Simulate the full 5-stage orchestration pipeline locally with terminal dashboards and manifest exports:
 
 ```bash
 cloud-forge simulate --manifests ./generated_manifests
@@ -155,7 +155,7 @@ cloud-forge security-audit
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run the full automated test suite covering all 5 architectural layers, manifest generation, and CLI commands:
 
@@ -165,7 +165,7 @@ pytest --cov=cloud_forge --cov-report=term-missing tests/
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 cloud-forge-orchestrator/
@@ -207,6 +207,6 @@ cloud-forge-orchestrator/
 
 ---
 
-## 📜 License
+## License
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
