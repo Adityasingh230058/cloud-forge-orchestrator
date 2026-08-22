@@ -44,9 +44,9 @@ class KubernetesClusterStage(BaseStage):
         cni = self.spec.networking.cni_plugin
         actions.append(f"Deployed `{cni}` CNI overlay network plugin across the cluster (Pod CIDR: {pod_cidr})")
 
-        # 3. Generate Secure Join Token
-        join_token = "abcdef.0123456789abcdef"
-        ca_hash = "sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+        # 3. Generate Secure Join Token (simulated token & hash for orchestration modeling)
+        join_token = "abcdef.0123456789abcdef"  # Simulation placeholder — not a real cluster secret
+        ca_hash = "sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"  # Simulation placeholder
         join_cmd = f"kubeadm join {master.ip}:6443 --token {join_token} --discovery-token-ca-cert-hash {ca_hash}"
         actions.append(f"Generated secure cluster join token on Control-Plane '{master.id}'")
 

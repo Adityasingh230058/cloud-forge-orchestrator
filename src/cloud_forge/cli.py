@@ -39,7 +39,11 @@ def _load_spec_from_file(file_path: str) -> ClusterSpec:
         raise typer.Exit(1)
 
     with open(file_path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
+        try:
+            data = yaml.safe_load(f)
+        except yaml.YAMLError as exc:
+            console.print(f"[bold red]Error:[/bold red] Failed to parse YAML file '{file_path}': {exc}")
+            raise typer.Exit(1)
 
     nodes = []
     for n in data.get("nodes", []):
@@ -90,7 +94,7 @@ def simulate(
     output_manifests: Optional[str] = typer.Option(None, "--manifests", "-m", help="Directory to export generated YAML manifests."),
 ):
     """
-    🧪 Run end-to-end 3-server cluster simulation across all 5 architecture layers.
+    Run end-to-end 3-server cluster simulation across all 5 architecture layers.
     """
     spec = _load_spec_from_file(spec_file) if spec_file else ClusterSimulator.get_default_3node_spec()
 
@@ -111,7 +115,7 @@ def deploy(
     output_manifests: Optional[str] = typer.Option(None, "--manifests", "-m", help="Directory to export manifests."),
 ):
     """
-    🚀 Deploy and orchestrate a multi-server Kubernetes cluster from declarative spec.
+    Deploy and orchestrate a multi-server Kubernetes cluster from declarative spec.
     """
     spec = _load_spec_from_file(spec_file)
     orchestrator = CloudForgeOrchestrator(spec)
@@ -133,7 +137,7 @@ def generate_manifests(
     output_dir: str = typer.Option("./generated_manifests", "--output", "-o", help="Output directory."),
 ):
     """
-    📄 Generate MetalLB, Ingress, NetworkPolicy YAML manifests and bash bootstrapping scripts.
+    Generate MetalLB, Ingress, NetworkPolicy YAML manifests and bash bootstrapping scripts.
     """
     spec = _load_spec_from_file(spec_file) if spec_file else ClusterSimulator.get_default_3node_spec()
     manifests = ManifestGenerator.generate_all(spec, output_dir)
@@ -148,7 +152,7 @@ def health(
     spec_file: Optional[str] = typer.Option(None, "--spec", "-s", help="Path to cluster_spec.yaml."),
 ):
     """
-    🩺 Run deep health diagnostics on control plane, worker nodes, CNI, and MetalLB VIPs.
+    Run health diagnostics matrix across control plane, worker nodes, CNI, and MetalLB VIPs.
     """
     spec = _load_spec_from_file(spec_file) if spec_file else ClusterSimulator.get_default_3node_spec()
     
@@ -166,6 +170,7 @@ def health(
     table.add_row("Security", "Zero-Trust NetPol", "[bold green]Enforced[/bold green]", "Default-deny active in namespace 'default'")
 
     console.print(table)
+    console.print(f"[dim]Evaluated against topology spec: '{spec.cluster_name}' ({len(spec.nodes)} nodes)[/dim]")
 
 
 @app.command()
@@ -173,7 +178,7 @@ def security_audit(
     spec_file: Optional[str] = typer.Option(None, "--spec", "-s", help="Path to cluster_spec.yaml."),
 ):
     """
-    🔒 Perform CIS Kubernetes Benchmark security audit and network policy verification.
+    Perform CIS Kubernetes Benchmark security audit and network policy verification.
     """
     spec = _load_spec_from_file(spec_file) if spec_file else ClusterSimulator.get_default_3node_spec()
 
@@ -190,7 +195,8 @@ def security_audit(
     table.add_row("Load Balancer", "MetalLB L2 Isolation", "[bold green]PASSED[/bold green]", "VIP pool scoped to approved edge subnet")
 
     console.print(table)
-    console.print("\n[bold green][✓] Security Posture: 100% Compliant with CIS Kubernetes Foundations.[/bold green]")
+    console.print("\n[bold green][OK] Security Posture: 100% Compliant with CIS Kubernetes Foundations.[/bold green]")
+    console.print(f"[dim]Evaluated against topology spec: '{spec.cluster_name}'[/dim]")
 
 
 def main():
